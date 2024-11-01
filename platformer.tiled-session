@@ -1,0 +1,44 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "Все файлы (*)",
+    "fileStates": {
+        "level1.tmx": {
+            "scale": 1.1202083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 165.14785196206066,
+                "y": -33.922261484098954
+            }
+        },
+        "level2.tmx": {
+            "scale": 0.890625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 479.43859649122805,
+                "y": 479.43859649122805
+            }
+        },
+        "titles.tsx": {
+            "dynamicWrapping": true
+        }
+    },
+    "last.imagePath": "C:/Users/vladd/PycharmProjects/platformer/1 Tiles",
+    "map.height": 20,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 30,
+    "openFiles": [
+    ],
+    "project": "platformer.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
+}

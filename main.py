@@ -6,7 +6,7 @@ pg.init()
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 600
 FPS = 80
-TILE_SCALE=1
+TILE_SCALE=2
 
 class Platforma(pg.sprite.Sprite):
     def __init__(self,image,x,y,width,height):
@@ -23,14 +23,16 @@ class Game:
         pg.display.set_caption("Платформер")
 
         self.clock = pg.time.Clock()
+
+
         self.is_running = False
         self.all_sprites=pg.sprite.Group()
-        self.platforms=pg.sprite.Group
+        self.platforms=pg.sprite.Group()
         self.tmx_map=pytmx.load_pygame("level2.tmx")
-        map_width=self.tmx_map.width*self.tmx_map.tilewidth*TILE_SCALE
+        self.map_width=self.tmx_map.width*self.tmx_map.tilewidth*TILE_SCALE
 
-        map_height=self.tmx_map.height*self.tmx_map.tileheight*TILE_SCALE
-        self.player=Player.Player(map_width,map_height)
+        self.map_height=self.tmx_map.height*self.tmx_map.tileheight*TILE_SCALE
+        self.player=Player.Player(self.map_width,self.map_height)
         self.all_sprites.add(self.player)
         for a in self.tmx_map:
             for x,y,gid in a:
@@ -62,28 +64,26 @@ class Game:
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.is_running = False
-        # keys = pg.key.get_pressed()
-        #
-        # if keys[pg.K_a]:
-        #     self.camera_x += self.camera_speed
-        #     print("b")
-        # if keys[pg.K_d]:
-        #     self.camera_x -= self.camera_speed
-        # if keys[pg.K_w]:
-        #     self.camera_y += self.camera_speed
-        # if keys[pg.K_s]:
-        #     self.camera_y -= self.camera_speed
+
 
     def update(self):
 
         self.player.update(self.platforms)
+
+
+        self.camera_x=self.player.rect.x-SCREEN_WIDTH//2
+
+        self.camera_y = self.player.rect.y - SCREEN_HEIGHT // 2
+        self.camera_x=max(0,min(self.camera_x,self.map_width-SCREEN_WIDTH))
+        self.camera_y = max(0, min(self.camera_y, self.map_height - SCREEN_HEIGHT))
+
     def draw(self):
         self.screen.fill("light blue")
 
 
 
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, sprite.rect.move(self.camera_x, self.camera_y))
+            self.screen.blit(sprite.image, sprite.rect.move(-self.camera_x, -self.camera_y))
         pg.display.flip()
 
 
