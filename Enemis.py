@@ -1,39 +1,42 @@
 import pygame as pg
-
+import Player
+import main
 from main import *
-class Player(pg.sprite.Sprite):
-    def __init__(self, map_width, map_height):
-        super(Player, self).__init__()
+TILE_SCALE=2
+class Enemis(pg.sprite.Sprite):
+    def __init__(self, map_width, map_height,player,start_pos,final_pos):
+        super(Enemis, self).__init__()
         self.load_animation()
         self.current_animation=self.idle_animation_right
         self.image=self.current_animation[0]
         self.current_image=0
 
         self.rect = self.image.get_rect()
-        self.rect.center = (200, 100)
+        self.rect.bottomleft=start_pos
+        self.igrok=player
 
-        self.direction="right"
         self.velocity_x = 0
         self.velocity_y = 0
         self.gravity = 2
+        self.right_edge=final_pos[0]+self.image.get_width()
+
+        self.left_edge=start_pos[0]
         self.is_jumping = False
         self.map_width = map_width * TILE_SCALE
         self.map_height = map_height * TILE_SCALE
         self.timer=pg.time.get_ticks()
         self.interval=200
-        self.hp = 10
-        self.damage_timer = pg.time.get_ticks()
-        self.damage_interval = 1000
-
+        self.direction="right"
+        self.idet_za_igrokom=0
+        print(self.rect.x)
     def load_animation(self):
         tile_size = 32
         tile_scale = 4
-
         self.idle_animation_right = []
         self.run_animation_right=[]
-        num_im = 6
-        spritesheet_idle = pg.image.load("Sprite Pack 5/3 - Big Red/Idle_(32 x 32).png")
-        spritesheet_run=pg.image.load("Sprite Pack 5/3 - Big Red/Running_(32 x 32).png")
+        num_im = 1
+        spritesheet_idle = pg.image.load("Sprite Pack 5/1 - Robo Retro/Pilot_Idle_(32 x 32).png")
+        spritesheet_run=pg.image.load("Sprite Pack 5/1 - Robo Retro/Pilot_Running_(32 x 32).png")
         for i in range(num_im):
             x = i * tile_size
             y = 0
@@ -54,33 +57,49 @@ class Player(pg.sprite.Sprite):
 
     def update(self, platforms):
 
-        keys = pg.key.get_pressed()
-        if keys[pg.K_SPACE] and not self.is_jumping:
-            self.jump()
-        if keys[pg.K_a]:
+        if self.direction=="right" and self.idet_za_igrokom==0:
+            self.velocity_x=10
+            if self.rect.right>=self.right_edge:
+                self.direction="left"
+
+        elif self.direction == "left" and self.idet_za_igrokom == 0:
+            self.velocity_x = -10
+            if self.rect.left <= self.left_edge:
+                self.direction = "right"
+
+
+
+
+
+
+        if self.igrok.rect.x - self.rect.x <= 50 and self.rect.y==self.igrok.rect.y:
+            self.idet_za_igrokom=1
             if self.current_animation!=self.run_animation_left:
                 self.current_animation=self.run_animation_left
                 self.current_image=0
-                self.direction="left"
 
-            self.velocity_x=-10
+            self.velocity_x=-7
 
-        elif keys[pg.K_d]:
+        elif self.rect.x - self.igrok.rect.x <= 50 and self.rect.y==self.igrok.rect.y:
+            self.idet_za_igrokom=1
             if self.current_animation!=self.run_animation_right:
                 self.current_animation=self.run_animation_right
                 self.current_image=0
-                self.direction="right"
 
-            self.velocity_x =10
+            self.velocity_x =7
+
+
         else:
             if self.current_animation == self.run_animation_right:
                 self.current_animation=self.idle_animation_right
                 self.current_image=0
+
             elif self.current_animation == self.run_animation_left:
                 self.current_animation = self.idle_animation_left
                 self.current_image = 0
-            self.velocity_x=0
+            # self.velocity_x=0
 
+            self.idet_za_igrokom=0
 
         new_x = self.rect.x + self.velocity_x
         if 0 <= new_x <= self.map_width - self.rect.width:
@@ -109,13 +128,3 @@ class Player(pg.sprite.Sprite):
             self.image=self.current_animation[self.current_image]
             self.timer=pg.time.get_ticks()
 
-
-
-
-    def jump(self):
-        self.velocity_y = -25
-        self.is_jumping = True
-    def get_damage(self):
-        if pg.time.get_ticks()-self.damage_timer>self.damage_interval:
-            self.hp -=1
-            self.damage_timer=pg.time.get_ticks()

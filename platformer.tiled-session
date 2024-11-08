@@ -3,8 +3,9 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level2.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "file.lastUsedOpenFilter": "Все файлы (*)",
     "fileStates": {
@@ -20,24 +21,27 @@
             "scale": 0.890625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.43859649122805,
-                "y": 479.43859649122805
+                "x": 435.6491228070175,
+                "y": 574.3157894736842
             }
         },
         "titles.tsx": {
-            "dynamicWrapping": true
+            "dynamicWrapping": true,
+            "scaleInDock": 1
         }
     },
-    "last.imagePath": "C:/Users/vladd/PycharmProjects/platformer/1 Tiles",
+    "last.imagePath": "C:/Users/vladd/PycharmProjects/platformer/4 Animated objects",
     "map.height": 20,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,
     "map.tileWidth": 32,
     "map.width": 30,
     "openFiles": [
+        "level2.tmx"
     ],
     "project": "platformer.tiled-project",
     "recentFiles": [
+        "level2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.type": 1
