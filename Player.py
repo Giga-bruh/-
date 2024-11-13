@@ -2,7 +2,7 @@ import pygame as pg
 
 from main import *
 class Player(pg.sprite.Sprite):
-    def __init__(self, map_width, map_height):
+    def __init__(self, map_width, map_height,x,y):
         super(Player, self).__init__()
         self.load_animation()
         self.current_animation=self.idle_animation_right
@@ -10,7 +10,9 @@ class Player(pg.sprite.Sprite):
         self.current_image=0
 
         self.rect = self.image.get_rect()
-        self.rect.center = (200, 100)
+        self.rect.center = (x,y)
+        self.x=x
+        self.y=y
 
         self.direction="right"
         self.velocity_x = 0
@@ -101,6 +103,9 @@ class Player(pg.sprite.Sprite):
                 self.rect.right=platform.rect.left
             if platform.rect.collidepoint(self.rect.midleft):
                 self.rect.left=platform.rect.right
+        if self.rect.y>SCREEN_HEIGHT*2.2:
+            self.hp-=1
+            self.rect.center = (self.x,self.y)
 
         if pg.time.get_ticks()-self.timer>self.interval:
             self.current_image+=1

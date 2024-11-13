@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.0" name="titles" tilewidth="40" tileheight="32" tilecount="61" columns="0">
+<tileset version="1.10" tiledversion="1.11.0" name="titles" tilewidth="160" tileheight="32" tilecount="62" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image source="1 Tiles/Tile_44.png" width="32" height="32"/>
@@ -183,5 +183,8 @@
  </tile>
  <tile id="60">
   <image source="4 Animated objects/Coin.png" width="40" height="10"/>
+ </tile>
+ <tile id="61">
+  <image source="Sprite Pack 5/2 - Lil Wiz/Idle_(32 x 32).png" width="160" height="32"/>
  </tile>
 </tileset>

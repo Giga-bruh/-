@@ -21,8 +21,24 @@
             "scale": 0.890625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 435.6491228070175,
-                "y": 574.3157894736842
+                "x": 510.87719298245617,
+                "y": 385.6842105263158
+            }
+        },
+        "level3.tmx": {
+            "scale": 0.7639583333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.3926915734934,
+                "y": 429.99727297518416
+            }
+        },
+        "level4.tmx": {
+            "scale": 0.7639583333333333,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 480.3926915734934,
+                "y": 429.99727297518416
             }
         },
         "titles.tsx": {
@@ -30,7 +46,7 @@
             "scaleInDock": 1
         }
     },
-    "last.imagePath": "C:/Users/vladd/PycharmProjects/platformer/4 Animated objects",
+    "last.imagePath": "C:/Users/vladd/PycharmProjects/platformer/Sprite Pack 5/2 - Lil Wiz",
     "map.height": 20,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,

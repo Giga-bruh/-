@@ -9,7 +9,7 @@ class Ball(pg.sprite.Sprite):
         self.image = pg.image.load("шар.png")
         self.image = pg.transform.scale(self.image, (30, 30))
 
-        self.stolkneylsa_s_stenoi=False
+        self.ynichtoshenie=False
 
         self.palyer_rect=player_rect.rect
 
@@ -20,6 +20,8 @@ class Ball(pg.sprite.Sprite):
             self.rect.x=self.palyer_rect.right
         else:
             self.rect.x=self.palyer_rect.left
+        self.interval = 500
+        self.timer = pg.time.get_ticks()
         self.velocity_x = 0
         self.velocity_y = 0
 
@@ -32,11 +34,13 @@ class Ball(pg.sprite.Sprite):
 
         for platform in platforms:
             if platform.rect.collidepoint(self.rect.midbottom):
-                self.stolkneylsa_s_stenoi=True
+                self.ynichtoshenie=True
             if platform.rect.collidepoint(self.rect.midtop):
-                self.stolkneylsa_s_stenoi=True
+                self.ynichtoshenie=True
             if platform.rect.collidepoint(self.rect.midright):
-               self.stolkneylsa_s_stenoi=True
+               self.ynichtoshenie=True
             if platform.rect.collidepoint(self.rect.midleft):
-                self.stolkneylsa_s_stenoi=True
+                self.ynichtoshenie=True
 
+        if pg.time.get_ticks() - self.timer > self.interval:
+            self.ynichtoshenie=True

@@ -4,6 +4,7 @@ import pygame as pg
 import pytmx
 import Player
 import Coins
+import Npc_teleport
 import Enemis
 pg.init()
 
@@ -26,13 +27,14 @@ class Game:
     def __init__(self):
         self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pg.display.set_caption("Платформер")
+        self.level = 2
         self.setup()
     #noinspection PyAttributeOutsideInit
     def setup(self):
         self.gamemode="game"
         self.clock = pg.time.Clock()
 
-
+        
         self.is_running = False
         self.colected_coins=0
         self.all_sprites=pg.sprite.Group()
@@ -40,14 +42,26 @@ class Game:
         self.enemis = pg.sprite.Group()
         self.shar=pg.sprite.Group()
         self.coins=pg.sprite.Group()
-        self.tmx_map=pytmx.load_pygame("level2.tmx")
+        self.npc=pg.sprite.Group()
+        self.tmx_map=pytmx.load_pygame(f"level{self.level}.tmx")
         self.map_width=self.tmx_map.width*self.tmx_map.tilewidth*TILE_SCALE
 
 
         self.map_height=self.tmx_map.height*self.tmx_map.tileheight*TILE_SCALE
-        self.player=Player.Player(self.map_width,self.map_height)
+        with open(f"level{self.level}_player.json", "r") as json_file:
+            data = json.load(json_file)
+            print(data)
 
-        self.all_sprites.add(self.player)
+        for enemy in data["player"]:
+            x1 = enemy["start_pos"][0] * TILE_SCALE * self.tmx_map.tilewidth
+            y1 = enemy["start_pos"][1] * TILE_SCALE * self.tmx_map.tilewidth
+
+
+
+
+            self.player=Player.Player(self.map_width,self.map_height,x1,y1)
+
+            self.all_sprites.add(self.player)
         for a in self.tmx_map:
             if a.name=="platforms":
                 for x,y,gid in a:
@@ -67,7 +81,20 @@ class Game:
                         coin = Coins.Coin( x * self.tmx_map.tilewidth * TILE_SCALE, y * self.tmx_map.tileheight*TILE_SCALE)
                         self.all_sprites.add(coin)
                         self.coins.add(coin)
-        with open("level1_enemis.json","r") as json_file:
+            elif a.name=="Npc":
+                print("aaaa")
+
+                for x, y, gid in a:
+
+                    tile = self.tmx_map.get_tile_image_by_gid(gid)
+
+                    if tile:
+                        self.npc_teleporta =Npc_teleport.Npc_teleport(x * self.tmx_map.tilewidth * TILE_SCALE,
+                                          y * self.tmx_map.tileheight * TILE_SCALE,"Sprite Pack 5/2 - Lil Wiz/Idle_(32 x 32).png",5)
+                        self.all_sprites.add(self.npc_teleporta)
+                        self.npc.add(self.npc_teleporta)
+
+        with open(f"level{self.level}_enemis.json","r") as json_file:
             data=json.load(json_file)
             print(data)
 
@@ -109,11 +136,14 @@ class Game:
             if event.type == pg.KEYDOWN:
 
                 keys = pg.key.get_pressed()
+
                 if keys[pg.K_q]:
 
                         bil=ball.Ball(self.player,self.player.direction)
                         self.shar.add(bil)
+
                         self.all_sprites.add(bil)
+
 
     def update(self):
         if self.player.hp<=0:
@@ -129,9 +159,10 @@ class Game:
                     self.enemis.remove(enemy)
                     self.all_sprites.remove(enemy)
         for ball in self.shar.sprites():
-            if ball.stolkneylsa_s_stenoi==True:
+            if ball.ynichtoshenie==True:
                 self.shar.remove(ball)
                 self.all_sprites.remove(ball)
+
             else:
                 ball.update(self.platforms)
         for coin in self.coins.sprites():
@@ -139,6 +170,17 @@ class Game:
             for hint in hints:
                 self.colected_coins+=1
             coin.update()
+        for npc in self.npc.sprites():
+            if  pg.sprite.spritecollide(self.player,self.npc,False):
+                print("a")
+                if self.level!=4:
+                    self.level+=1
+                else:
+                    self.level=1
+
+                self.setup()
+            npc.update()
+
 
 
 

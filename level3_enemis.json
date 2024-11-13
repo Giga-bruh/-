@@ -1,0 +1,11 @@
+{
+  "enemis": [{
+    "Name": "Bomb",
+    "start_pos": [0,18],
+    "final_pos": [9,18]
+  }
+    ]
+
+
+
+}
