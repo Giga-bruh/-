@@ -50,7 +50,7 @@ class Game:
         self.map_height=self.tmx_map.height*self.tmx_map.tileheight*TILE_SCALE
         with open(f"level{self.level}_player.json", "r") as json_file:
             data = json.load(json_file)
-            print(data)
+
 
         for enemy in data["player"]:
             x1 = enemy["start_pos"][0] * TILE_SCALE * self.tmx_map.tilewidth
@@ -82,7 +82,7 @@ class Game:
                         self.all_sprites.add(coin)
                         self.coins.add(coin)
             elif a.name=="Npc":
-                print("aaaa")
+
 
                 for x, y, gid in a:
 
@@ -96,7 +96,8 @@ class Game:
 
         with open(f"level{self.level}_enemis.json","r") as json_file:
             data=json.load(json_file)
-            print(data)
+
+
 
 
         for enemy in data["enemis"]:
@@ -106,7 +107,7 @@ class Game:
 
                 x2 = enemy["final_pos"][0] * TILE_SCALE * self.tmx_map.tilewidth
                 y2 = enemy["final_pos"][1] * TILE_SCALE * self.tmx_map.tilewidth
-                print("a")
+
                 bomba=Enemis.Enemis(self.map_width,self.map_height,self.player,[x1,y1],[x2,y2])
                 self.enemis.add(bomba)
                 self.all_sprites.add(bomba)
@@ -172,7 +173,7 @@ class Game:
             coin.update()
         for npc in self.npc.sprites():
             if  pg.sprite.spritecollide(self.player,self.npc,False):
-                print("a")
+
                 if self.level!=4:
                     self.level+=1
                 else:
